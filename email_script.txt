@@ -1,0 +1,60 @@
+Option Explicit
+'msgbox "start"
+call procCode
+'msgbox "end"
+
+Function procCode()
+    Dim strFrom, strTo, strSubject, strBody, strIDs
+    Dim rs, qry
+    
+    strIDs = "0"
+    'qry = "SELECT * FROM dbo_tblEmailRequest WHERE Status ='Unsent'"
+    qry = "SELECT * FROM dbo_tblEmailRequest WHERE Status is null"
+    Set rs = dbConn.Execute(qry)
+
+    strFrom = "noreply@cforms.net"
+    While Not rs.EOF
+        strTo = rs("EmailTo")
+        strSubject = rs("EmailSubject")
+        'strBody = rs("EmailBody")
+        strBody = Replace(rs("EmailBody"), """", "'")
+        Call sendEmail(strFrom, strTo, strSubject, strBody)
+        strIDs = strIDs & "," & rs("Id")
+        rs.MoveNext
+    Wend
+    
+    'qry = "UPDATE dbo_tblEmailRequest SET Status = 'Sent', AttemptNumber='1', LastAttemptDateTime='" & Now & "' WHERE Id in (" & strIDs & ")"
+    qry = "UPDATE dbo_tbl_SentEmails SET SentReference = '" & Now & "' WHERE Id in (" & strIDs & ")"
+
+    dbConn.Execute(qry)        
+End Function
+
+
+
+Function sendEmail(strFrom, strTo, strSubject, strBody)
+	Dim myMail 
+        Set myMail = CreateObject("CDO.Message")
+        myMail.From = strFrom
+        myMail.To = strTo
+        'myMail.Bcc = strBcc
+        myMail.Subject = strSubject
+        myMail.HTMLBody = strBody
+        myMail.Send
+        Set myMail = Nothing
+
+End Function
+
+
+
+Function dbConn()
+  Dim conn, rs, ds
+  ds = "E:\domains\dh03.4link.com\db\"
+  ds = ds & "CForms-UCR_Web3001.mdb"
+  
+  Set rs = CreateObject("ADODB.Recordset")
+  Set conn = CreateObject("ADODB.Connection")
+
+  conn.Open "Provider=Microsoft.Jet.OLEDB.4.0;Data Source=" & ds
+  Set dbConn = conn
+End Function
+

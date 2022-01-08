@@ -1,0 +1,45 @@
+# list all VMs
+C:\Program Files\Oracle\VirtualBox>VBoxManage list vms
+
+
+
+VBoxManage list runningvms
+
+VBoxManage list -l runningvms
+
+"C:\Program Files\Oracle\VirtualBox\VBoxManage.exe" list vms"
+
+# list snapshots
+vboxmanage snapshot Centos7 list
+"C:\Program Files\Oracle\VirtualBox\VBoxManage.exe" snapshot Centos7 list
+
+# take snapshot
+vboxmanage snapshot Centos7 take startingPoint
+"C:\Program Files\Oracle\VirtualBox\VBoxManage.exe" snapshot Win10 take DevEnv
+
+# delete snapshot
+VBoxManage snapshot { uuid|vmname } delete { snapshot-name/uuid }
+
+# restore snapshot by name
+VBoxManage snapshot <uuid|vmname> restore <snapshot-name>
+
+# restore snapshot current
+VBoxManage snapshot <uuid|vmname> restorecurrent
+
+
+
+
+C:\Program Files\Oracle\VirtualBox>
+
+# Start VM headless
+VBoxManage startvm Centos7 --type headless
+C:\Program Files\Oracle\VirtualBox>VBoxManage startvm Centos7 --type headless
+Waiting for VM "Centos7" to power on...
+VM "Centos7" has been successfully started.
+
+
+# shut down
+VBoxManage controlvm Centos7 acpipowerbutton
+or
+
+VBoxManage controlvm Centos7 poweroff

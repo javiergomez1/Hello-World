@@ -1,0 +1,2 @@
+# Linux reset MS SQL SA Password
+sudo /opt/mssql/bin/mssql-conf set-sa-password

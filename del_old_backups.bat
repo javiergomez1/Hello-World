@@ -1,0 +1,1 @@
+ForFiles /p "E:\FTPRoot\_backups" /s /d -15 /c "cmd /c del @file"

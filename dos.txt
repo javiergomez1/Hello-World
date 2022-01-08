@@ -1,0 +1,28 @@
+# To open the Startup folder in Windows 10, open the Run box and:
+# C:\Users\{Username}\AppData\Roaming\Microsoft\Windows\Start Menu\Programs\Startup\
+# C:\Users\javierg\AppData\Roaming\Microsoft\Windows\Start Menu\Programs\Startup\
+
+shell:startup 		- Current Users Startup folder
+shell:common startup	- All Users Startup folder.
+
+
+shell:common startup
+
+
+# display system date and time
+echo %date% %time% 
+
+# admin cmd - enable / disable hibernat
+powercfg.exe /hibernate on
+powercfg.exe /hibernate off
+
+# admin CMD - enable or disable hyper-v
+dism.exe /Online /Enable-Feature:Microsoft-Hyper-V /All
+
+dism.exe /Online /Disable-Feature:Microsoft-Hyper-V-All
+
+# list all .jpg files with their full path:
+dir /s/b/l C:\Users\javierg\Pictures\*jpg > C:\Users\javierg\pictures.txt
+
+# open Chrome as tester
+runas /user:tester /profile "C:\Program Files (x86)\Google\Chrome\Application\chrome.exe --no-sandbox"
